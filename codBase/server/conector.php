@@ -26,8 +26,9 @@ class ConectorBD{
     }
 
     function insertUser($usuario){
-        $sql = 'INSERT INTO usuarios VALUES('. $usuario->getEmail() . ' , ' . $usuario->getNombre() . ' , '.$usuario->getContrasena(). ' , '. $usuario->getFecha_Nac() . ');';
-        return $this->ejecutarQuery($sql);
+        $insert = $this->conexion->prepare('INSERT INTO usuarios (id, nombre, email, contrasena, fecha_nac) VALUES (?,?,?,?,?)');
+        $insert->bind_param("isssi", $usuario->getID(), $usuario->getNombre(), $usuario->getEmail(), $usuario->getContrasena(), date('y-m-d',$usuario->getFecha_Nac()));
+        $insert->execute();
     }
 }
 

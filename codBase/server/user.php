@@ -12,7 +12,7 @@
             $this->email = $email;
             $this->nombre = $nombre; 
             $this->contrasena = $contrasena;
-            $this->fecha_nac = $fecha_nac;   
+            $this->fecha_nac = strtotime($fecha_nac);   
 
         }
 
