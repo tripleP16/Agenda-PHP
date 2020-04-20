@@ -1,4 +1,5 @@
 <?php 
+     date_default_timezone_set('America/Caracas');
     class user {
         private $id;
         private $email;

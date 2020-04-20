@@ -1,5 +1,7 @@
 <?php 
 require('user.php');
+date_default_timezone_set('America/Caracas');
+
 class ConectorBD{
     private $host;
     private $user;
@@ -27,9 +29,39 @@ class ConectorBD{
 
     function insertUser($usuario){
         $insert = $this->conexion->prepare('INSERT INTO usuarios (id, nombre, email, contrasena, fecha_nac) VALUES (?,?,?,?,?)');
-        $insert->bind_param("isssi", $usuario->getID(), $usuario->getNombre(), $usuario->getEmail(), $usuario->getContrasena(), date('y-m-d',$usuario->getFecha_Nac()));
+        $insert->bind_param("issss", $usuario->getID(), $usuario->getNombre(), $usuario->getEmail(), password_hash($usuario->getContrasena(), PASSWORD_DEFAULT), date('Y-m-d',$usuario->getFecha_Nac()));
         $insert->execute();
     }
+
+    function devolverContrasena($email){
+      $select = $this->conexion->prepare('SELECT contrasena FROM usuarios  WHERE email = ? '); 
+      $select->bind_param("s", $email);
+      $select->execute();
+      $result = $select->get_result();
+      $fila = $result->fetch_assoc();
+      
+      return $fila ;
+    }
+
+    function cerrarConexion(){
+      $this->conexion->close();
+    }
+
+
+    function comprobarEmail($email){
+      $select = $this->conexion->prepare('SELECT email FROM usuarios  WHERE email = ? '); 
+      $select->bind_param("s", $email);
+      $select->execute();
+      $result = $select->get_result();
+      $fila = $result->fetch_assoc();
+      
+      return $fila ;
+    }
+
+    function devolverId($user){
+      
+    }
+
 }
 
 
