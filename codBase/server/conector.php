@@ -59,8 +59,38 @@ class ConectorBD{
     }
 
     function devolverId($user){
+      $select = $this->conexion->prepare('SELECT id FROM usuarios WHERE email = ?');
+      $select->bind_param("s", $user);
+      $select->execute();
+      $result = $select->get_result();
+      $fila = $result->fetch_assoc();
       
+      return $fila ;
     }
+    
+    function insertData($tabla, $data){
+      $sql = 'INSERT INTO '.$tabla.' (';
+      $i = 1;
+      foreach ($data as $key => $value) {
+        $sql .= $key;
+        if ($i<count($data)) {
+          $sql .= ', ';
+        }else $sql .= ')';
+        $i++;
+      }
+      $sql .= ' VALUES (';
+      $i = 1;
+      foreach ($data as $key => $value) {
+        $sql .= $value;
+        if ($i<count($data)) {
+          $sql .= ', ';
+        }else $sql .= ');';
+        $i++;
+      }
+      return $this->ejecutarQuery($sql);
+    }
+
+    
 
 }
 
