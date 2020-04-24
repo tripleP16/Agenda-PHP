@@ -90,7 +90,34 @@ class ConectorBD{
       return $this->ejecutarQuery($sql);
     }
 
-    
+    function consultar($tablas, $campos, $condicion = ""){
+      $sql = "SELECT ";
+      $result = array_keys($campos);
+      $ultima_key = end($result);
+      foreach ($campos as $key => $value) {
+        $sql .= $value;
+        if ($key!=$ultima_key) {
+          $sql.=", ";
+        }else $sql .=" FROM ";
+      }
+  
+      $result = array_keys($tablas);
+      $ultima_key = end($result);
+      foreach ($tablas as $key => $value) {
+        $sql .= $value;
+        if ($key!=$ultima_key) {
+          $sql.=", ";
+        }else $sql .= " ";
+      }
+  
+      if ($condicion == "") {
+        $sql .= ";";
+      }else {
+        $sql .= $condicion.";";
+      }
+      return $this->ejecutarQuery($sql);
+    }
+   
 
 }
 
