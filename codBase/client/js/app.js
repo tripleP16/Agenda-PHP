@@ -17,7 +17,6 @@ class EventsManager {
         success: (data) =>{
           if (data.msg=="OK") {
             this.poblarCalendario(data.eventos)
-            eventosTotal = eventos;  
 
           }else {
             alert(data.msg)
@@ -173,7 +172,7 @@ class EventsManager {
       form_data.append('end_date', end_date)
       form_data.append('start_hour', start_hour)
       form_data.append('end_hour', end_hour)
-
+      
       $.ajax({
         url: '../server/update_event.php',
         dataType: "json",
