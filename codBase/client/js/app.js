@@ -1,6 +1,4 @@
 
-
-
 class EventsManager {
   constructor() {
       this.obtenerDataInicial()
@@ -19,7 +17,7 @@ class EventsManager {
         success: (data) =>{
           if (data.msg=="OK") {
             this.poblarCalendario(data.eventos)
-
+            eventosTotal = eventos;  
 
           }else {
             alert(data.msg)

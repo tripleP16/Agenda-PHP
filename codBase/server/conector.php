@@ -43,6 +43,16 @@ class ConectorBD{
       return $fila ;
     }
 
+    function devolverEventos($id){
+      $select = $this->conexion->prepare('SELECT * FROM eventos  WHERE fk_usuarios = ? '); 
+      $select->bind_param("i", $id);
+      $select->execute();
+      $result = $select->get_result();
+      $fila = $result->fetch_assoc();
+      
+      return $fila ;
+    }
+
     function cerrarConexion(){
       $this->conexion->close();
     }
@@ -116,6 +126,14 @@ class ConectorBD{
         $sql .= $condicion.";";
       }
       return $this->ejecutarQuery($sql);
+    }
+
+    
+
+    function eliminarEvento($id){
+      $delete = $this->conexion->prepare('DELETE FROM eventos WHERE id = ?');
+      $delete->bind_param("i", $id);
+      $delete->execute();
     }
    
 

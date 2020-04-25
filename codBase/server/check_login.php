@@ -14,6 +14,7 @@
                 session_start();
                 $_SESSION['email']= $User;
                 $response['msg'] = 'OK';
+                $_SESSION['isLogin'] = true;
             }else{
                 $response['msg'] = 'La contraseña no es correcta';
             }

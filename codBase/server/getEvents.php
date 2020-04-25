@@ -9,9 +9,12 @@
     $response['msg']= 'OK' ;
     $fk_usuarios = $con->devolverId($_SESSION['email']); 
     $resultado = $con->consultar(['eventos'],['*'], "WHERE fk_usuarios ='".$fk_usuarios['id']."'",''); 
-
+    $i = 0;
     while($fila = $resultado->fetch_assoc()){
-          $response['eventos'][] = $fila;
+          $response['eventos'][$i]['titulo'] = $fila['titulo'];
+          $response['eventos'][$i]['id'] = $fila['id'];
+          echo $response['eventos'][$i]['id'] ;
+          $i ++;
       }
   
   
