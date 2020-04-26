@@ -130,7 +130,9 @@ class ConectorBD{
 
     
     function actualizarEvento ($id, $fecha_inicio, $fecha_final, $hora_inicio, $hora_fin){
-      $add_evento = mysqli_query($this->conexion, "UPDATE eventos SET fecha_inicio= '$fecha_inicio', hora_inicio='$hora_inicio', fecha_fin= '$fecha_final', hora_fin='$hora_fin' where id = '$id' ");
+      $update = $this->conexion->prepare('UPDATE eventos SET fecha_inicio = ?, fecha_fin = ?  WHERE id = ?'); 
+      $update->bind_param("ssi", date('Y-m-d',$fecha_inicio), date('Y-m-d',$fecha_final),$id); 
+      $update->execute();
     }
     function eliminarEvento($id){
       $delete = $this->conexion->prepare('DELETE FROM eventos WHERE id = ?');
